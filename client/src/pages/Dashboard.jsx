@@ -184,12 +184,6 @@ const Dashboard = () => {
           Loading...
         </div>
       )}
-      {error && (
-        <div className="text-red-500 text-sm sm:text-base flex items-center gap-2">
-          <XCircle className="w-4 h-4" />
-          Error: {error}
-        </div>
-      )}
 
       {/* Documents Section */}
       <div className="mt-4">

@@ -87,7 +87,7 @@ const Sidebar = () => {
             <span>Activity Log</span>
           </NavLink>
           <NavLink
-            to="/activities"
+            to="/answer"
             className={({ isActive }) =>
               `${baseLink} ${isActive ? activeLink : ""}`
             }
