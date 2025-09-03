@@ -46,7 +46,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="w-60 bg-black text-gray-200 min-h-screen p-4 border-r border-neutral-900 sticky top-0 flex flex-col">
+    <aside className="w-60 bg-black h-[100vh] text-gray-200 p-4 border-r border-neutral-900 sticky top-0 flex flex-col">
       <div>
         <div className="text-lg font-semibold mb-4">Knowledge Hub</div>
         <nav className="flex flex-col gap-1">
