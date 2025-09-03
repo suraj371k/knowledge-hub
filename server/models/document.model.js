@@ -28,4 +28,5 @@ const documentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Document", documentSchema);
+const Document =  mongoose.model("Document", documentSchema);
+export default Document;

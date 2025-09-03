@@ -5,9 +5,9 @@ import jwt from "jsonwebtoken";
 export const registerUser = async (req, res) => {
   try {
     //get input
-    const { email, name, password } = req.body;
+    const { email, name, password , role} = req.body;
 
-    if (!email || !name || !password) {
+    if (!email || !name || !password || !role) {
       return res
         .status(400)
         .json({ success: false, error: "All fields are require" });
@@ -27,7 +27,7 @@ export const registerUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await new User({ email, name, password: hashedPassword });
+    const newUser = new User({ email, name, password: hashedPassword , role });
 
     newUser.save();
 
@@ -110,28 +110,35 @@ export const logoutUser = (req, res) => {
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+      sameSite: "lax", // Changed to match login settings
     });
-    return res.status(200).json({ success: true, message: "Logged out successfully" });
+    return res
+      .status(200)
+      .json({ success: true, message: "Logged out successfully" });
   } catch (error) {
     console.error("Error in logout user", error.message);
-    return res.status(500).json({ success: false, message: "Internal server error" });
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
   }
 };
 
 export const fetchProfile = async (req, res) => {
-    try {
-      const userId = req.user.id;
-      const user = await User.findById(userId).select("-password");
-      
-      if (!user) {
-        return res.status(404).json({ success: false, message: "User not found" });
-      }
-  
-      return res.status(200).json({ success: true, user });
-    } catch (error) {
-      console.error("Error in fetch profile", error.message);
-      return res.status(500).json({ success: false, message: "Internal server error" });
+  try {
+    const userId = req.user.id;
+    const user = await User.findById(userId).select("-password");
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
-  };
-  
+
+    return res.status(200).json({ success: true, user });
+  } catch (error) {
+    console.error("Error in fetch profile", error.message);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
